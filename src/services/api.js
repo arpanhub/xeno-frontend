@@ -1,7 +1,8 @@
 import axios from 'axios';
 import useAuthStore from '../store/authStore';
 
-const API_URL = 'https://xeno-backend-oqbd.onrender.com/api';
+// Load API_URL from environment variables
+const API_URL = process.env.REACT_APP_API_URL;
 
 const api = axios.create({
   baseURL: API_URL,
@@ -23,7 +24,6 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
 
 api.interceptors.response.use(
   (response) => response,
@@ -75,4 +75,4 @@ export const messageLogsAPI = {
   updateStatus: (id, data) => api.put(`/message-logs/${id}/status`, data),
 };
 
-export default api; 
+export default api;

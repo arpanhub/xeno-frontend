@@ -1,12 +1,63 @@
-# React + Vite
+# ⚛️ Mini CRM Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the **React frontend** for the **Mini CRM Platform**, built with modern tech like **Vite**, **TailwindCSS**, **React Router**, **Zustand**, and more. It is designed to work seamlessly with the backend (`mini-crm-backend`).
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tech Stack
 
-## Expanding the ESLint configuration
+- **React 18** – Core UI library
+- **Vite** – Fast build tool
+- **TailwindCSS** – Utility-first styling
+- **Axios** – API calls
+- **React Router** – Client-side routing
+- **Headless UI & Heroicons** – Beautiful UI components
+- **Recharts** – Data visualizations
+- **React Hot Toast** – Toast notifications
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## ⚙️ Getting Started
+
+### 📦 Install Dependencies
+
+```bash
+cd frontend
+npm install
+```
+
+### 🏗️ Start Development Server
+
+```bash
+npm run dev
+```
+This will start the Vite development server, and you can access the app at `http://localhost:5173`.
+### 📦 Build for Production
+
+```bash
+npm run build
+```
+This will create an optimized build of the app in the `dist` folder.
+### 📦 Preview Production Build
+
+```bash
+npm run preview
+```
+This will start a local server to preview the production build.
+### 📦 Linting
+
+```bash
+npm run lint
+```
+This will run ESLint to check for code quality and style issues.
+### 📦 Formatting
+
+```bash
+npm run format
+```
+### 🔧 Set Up Environment
+If needed, create a .env file for API base URLs or other env-specific values:
+
+```
+VITE_API_URL=http://yourbackendapi:4713/api
+```
