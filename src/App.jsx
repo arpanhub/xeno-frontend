@@ -13,6 +13,9 @@ import Campaigns from './pages/Campaigns';
 import NewCampaign from './pages/NewCampaign';
 import CampaignResults from './pages/CampaignResults';
 import MessageLogs from './pages/MessageLogs';
+import {GoogleOAuthProvider} from '@react-oauth/google';
+
+
 
 function PrivateRoute({ children }) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -25,6 +28,14 @@ function PublicRoute({ children }) {
 }
 
 export default function App() {
+ 
+  const GoogleOauthWrapper =()=>{
+    return (
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+        <Login />
+    </GoogleOAuthProvider>
+   )
+}
   return (
     <Router>
       <Toaster position="top-right" />
@@ -33,7 +44,7 @@ export default function App() {
           path="/login"
           element={
             <PublicRoute>
-              <Login />
+             <GoogleOauthWrapper/>
             </PublicRoute>
           }
         />
@@ -63,6 +74,7 @@ export default function App() {
           <Route path="/campaigns/new" element={<NewCampaign />} />
           <Route path="/campaigns/:id/results" element={<CampaignResults />} />
           <Route path="message-logs" element={<MessageLogs />} />
+          <Route path="*" element={'404 | Not Found'} />
         </Route>
       </Routes>
     </Router>

@@ -21,6 +21,7 @@ export default function Dashboard() {
     const fetchDashboardData = async () => {
       try {
         const response = await api.get('/dashboard/stats');
+        console.log('Dashboard data:', response.data);
         setDashboardData(response.data);
         
         // Check for cached insights in localStorage

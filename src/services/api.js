@@ -1,8 +1,9 @@
 import axios from 'axios';
 import useAuthStore from '../store/authStore';
 // Load API_URL from environment variables
-const API_URL = 'https://xeno-backend-oqbd.onrender.com/api';
 
+const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
+console.log('API_URL:', API_URL);
 const api = axios.create({
   baseURL: API_URL,
   headers: {

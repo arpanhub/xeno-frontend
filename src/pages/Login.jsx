@@ -1,8 +1,12 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import toast from 'react-hot-toast';
 import useAuthStore from '../store/authStore';
+import { FcGoogle } from 'react-icons/fc';
+import {useGoogleLogin} from '@react-oauth/google';
+import axios from 'axios';
+
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -13,14 +17,37 @@ export default function Login() {
   const navigate = useNavigate();
   const setAuth = useAuthStore((state) => state.setAuth);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const reponseGoogle = async(authResult)=>{
+    try{
+      const {code} = authResult;
+      console.log("authResult:",authResult);
+      console.log("code:",code);
+      const res = await api.post('/oauth/google',{code});
+      const {token,user} = res.data;
+      console.log(token,user);
+      setAuth(token,user);  
+      toast.success('Logged in with Google!');
+      navigate('/dashboard');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+    }catch(error){
+      console.error("message:",error);
+      toast.error('Google login failed');
+    }
+  }
+  const handleGoogleLogin = useGoogleLogin({
+      onSuccess:reponseGoogle,
+      onError:reponseGoogle,
+      flow:'auth-code'
+  });
+
+   const handleChange = (e) => {
+     const { name, value } = e.target;
+     setFormData((prev) => ({ ...prev, [name]: value }));
+   };
+
+   const handleSubmit = async (e) => {
+     e.preventDefault();
+     setLoading(true);
 
     try {
       const response = await api.post('/auth/login', formData);
@@ -80,7 +107,7 @@ export default function Login() {
             </div>
           </div>
 
-          <div>
+         <div>
             <button
               type="submit"
               disabled={loading}
@@ -88,7 +115,15 @@ export default function Login() {
             >
               {loading ? 'Loggin in...' : 'Log in'}
             </button>
-          </div>
+            <button
+              type="button"
+              className="mt-3 group relative w-full flex justify-center items-center py-2 px-4 border border-gray-300 text-sm font-medium rounded-md bg-white text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+               onClick={handleGoogleLogin} // Add your Google login handler here
+            >
+              <FcGoogle className="mr-2 h-5 w-5" />
+              Log in with Google
+            </button>
+          </div>  
         </form>
       </div>
     </div>
